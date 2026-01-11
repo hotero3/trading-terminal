@@ -2,11 +2,9 @@
 window.addEventListener('load', () => {
     const u2 = localStorage.getItem('u2');
     const u3 = localStorage.getItem('u3');
-    const u4 = localStorage.getItem('u4');
     
     if (u2) document.getElementById('v2').src = u2;
     if (u3) document.getElementById('v3').src = u3;
-    if (u4) document.getElementById('v4').src = u4;
 });
 
 // 2. Botones de URL
@@ -38,4 +36,5 @@ document.querySelectorAll('.btn-zoom').forEach(boton => {
 document.getElementById('btnCloseZoom').addEventListener('click', () => {
   document.getElementById('zoomBox').style.display = 'none';
   document.getElementById('zoomFrame').src = '';
+
 });

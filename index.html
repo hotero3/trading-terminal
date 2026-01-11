@@ -2,14 +2,20 @@
 <html>
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Panel Trader iPad</title>
+  <title>Terminal iPad 2 Paneles</title>
   <style>
     body, html { margin: 0; padding: 0; height: 100vh; background: #000; overflow: hidden; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
-    .container { display: grid; grid-template-rows: repeat(2, 1fr); height: 100vh; gap: 4px; background: #2a2e39; }
+    
+    .container { 
+      display: grid; 
+      grid-template-rows: repeat(2, 1fr); /* Cambio a 2 filas iguales */
+      height: 100vh; 
+      gap: 4px; 
+      background: #2a2e39; 
+    }
     
     .panel { display: flex; flex-direction: column; background: #131722; position: relative; }
     
-    /* Toolbar más alta para dedos (44px es el estándar de Apple) */
     .toolbar { 
       background: #1e222d; height: 44px; display: flex; justify-content: flex-end; align-items: center; gap: 15px;
       border-bottom: 1px solid #2a2e39; padding: 0 10px;
@@ -21,7 +27,6 @@
 
     iframe { width: 100%; flex-grow: 1; border: none; }
 
-    /* Zoom que cubra el 100% del iPad */
     .zoom-overlay {
       position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
       z-index: 99999; display: none; background: #131722; flex-direction: column;
@@ -33,19 +38,18 @@
   <div class="container">
     <div class="panel">
       <div class="toolbar">
+        <button class="btn-url" data-id="v1">URL</button>
+        <button class="btn-zoom" data-id="v1">ZOOM</button>
+      </div>
+      <iframe id="v1"></iframe>
+    </div>
+    <div class="panel">
+      <div class="toolbar">
         <button class="btn-url" data-id="v2">URL</button>
         <button class="btn-zoom" data-id="v2">ZOOM</button>
       </div>
       <iframe id="v2"></iframe>
     </div>
-    <div class="panel">
-      <div class="toolbar">
-        <button class="btn-url" data-id="v3">URL</button>
-        <button class="btn-zoom" data-id="v3">ZOOM</button>
-      </div>
-      <iframe id="v3"></iframe>
-    </div>
-    
   </div>
 
   <div id="zoomBox" class="zoom-overlay">
@@ -57,6 +61,4 @@
 
   <script src="dashboard.js"></script>
 </body>
-
 </html>
-

@@ -2,61 +2,82 @@
 <html>
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Terminal iPad 2 Paneles</title>
+  <title>Terminal iPad - Zoom Interno</title>
   <style>
-    body, html { margin: 0; padding: 0; height: 100vh; background: #000; overflow: hidden; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+    body, html { margin: 0; padding: 0; height: 100vh; background: #000; overflow: hidden; font-family: -apple-system, sans-serif; }
     
     .container { 
       display: grid; 
-      grid-template-rows: repeat(2, 1fr); /* Cambio a 2 filas iguales */
+      grid-template-rows: repeat(2, 1fr); 
       height: 100vh; 
       gap: 4px; 
       background: #2a2e39; 
     }
     
-    .panel { display: flex; flex-direction: column; background: #131722; position: relative; }
+    .panel { display: flex; flex-direction: column; background: #131722; overflow: hidden; }
     
     .toolbar { 
-      background: #1e222d; height: 44px; display: flex; justify-content: flex-end; align-items: center; gap: 15px;
-      border-bottom: 1px solid #2a2e39; padding: 0 10px;
+      background: #1e222d; height: 48px; display: flex; justify-content: space-between; align-items: center;
+      border-bottom: 1px solid #2a2e39; padding: 0 15px; z-index: 10;
     }
-    .toolbar button { 
+
+    /* Estilo del control de Zoom */
+    .zoom-control { display: flex; align-items: center; gap: 10px; color: #d1d4dc; font-size: 12px; }
+    input[type=range] { width: 80px; accent-color: #2962ff; }
+
+    .btn-group { display: flex; gap: 10px; }
+    button { 
       background: #2a2e39; color: #d1d4dc; border: 1px solid #363a45; 
-      border-radius: 6px; cursor: pointer; font-size: 13px; font-weight: 600; padding: 6px 12px;
+      border-radius: 6px; font-size: 13px; font-weight: 600; padding: 6px 12px;
     }
 
-    iframe { width: 100%; flex-grow: 1; border: none; }
-
-    .zoom-overlay {
-      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-      z-index: 99999; display: none; background: #131722; flex-direction: column;
+    /* Contenedor especial para el escalado */
+    .iframe-wrapper { 
+      flex-grow: 1; 
+      overflow: auto; /* Permite scroll si el zoom es muy grande */
+      position: relative;
     }
-    #zoomFrame { width: 100%; height: 100%; border: none; }
+
+    iframe { 
+      width: 100%; 
+      height: 100%; 
+      border: none; 
+      transform-origin: top left; /* El zoom nace desde la esquina */
+      transition: transform 0.2s ease;
+    }
   </style>
 </head>
 <body>
   <div class="container">
     <div class="panel">
       <div class="toolbar">
-        <button class="btn-url" data-id="v1">URL</button>
-        <button class="btn-zoom" data-id="v1">ZOOM</button>
+        <div class="zoom-control">
+          <span>Zoom:</span>
+          <input type="range" class="zoom-slider" data-id="v1" min="50" max="150" value="100">
+        </div>
+        <div class="btn-group">
+          <button class="btn-url" data-id="v1">URL</button>
+        </div>
       </div>
-      <iframe id="v1"></iframe>
+      <div class="iframe-wrapper">
+        <iframe id="v1"></iframe>
+      </div>
     </div>
+
     <div class="panel">
       <div class="toolbar">
-        <button class="btn-url" data-id="v2">URL</button>
-        <button class="btn-zoom" data-id="v2">ZOOM</button>
+        <div class="zoom-control">
+          <span>Zoom:</span>
+          <input type="range" class="zoom-slider" data-id="v2" min="50" max="150" value="100">
+        </div>
+        <div class="btn-group">
+          <button class="btn-url" data-id="v2">URL</button>
+        </div>
       </div>
-      <iframe id="v2"></iframe>
+      <div class="iframe-wrapper">
+        <iframe id="v2"></iframe>
+      </div>
     </div>
-  </div>
-
-  <div id="zoomBox" class="zoom-overlay">
-    <div class="toolbar">
-      <button id="btnCloseZoom" style="background: #eb4d4b; color: #fff; border: none;">CERRAR</button>
-    </div>
-    <iframe id="zoomFrame"></iframe>
   </div>
 
   <script src="dashboard.js"></script>

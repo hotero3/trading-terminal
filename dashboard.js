@@ -5,31 +5,26 @@ window.addEventListener('load', () => {
     if (u2) document.getElementById('v2').src = u2;
 });
 
-// Lógica para el Zoom Interno (Escalado)
 document.querySelectorAll('.zoom-slider').forEach(slider => {
-  slider.addEventListener('input', (e) => {
+  slider.addEventListener('change', (e) => { // 'change' es mejor que 'input' para tablets lentas
     const idIframe = e.target.getAttribute('data-id');
     const iframe = document.getElementById(idIframe);
-    const scale = e.target.value / 100;
+    const val = e.target.value;
     
-    // Ajustamos el transform para el zoom
-    iframe.style.transform = `scale(${scale})`;
-    
-    // Compensamos el ancho/alto para que no queden huecos blancos
-    iframe.style.width = (100 / scale) + "%";
-    iframe.style.height = (100 / scale) + "%";
+    // Cambiamos el tamaño relativo en lugar de usar efectos visuales pesados
+    iframe.style.width = (10000 / val) + "%";
+    iframe.style.height = (10000 / val) + "%";
+    iframe.style.transform = `scale(${val / 100})`;
+    iframe.style.transformOrigin = "0 0";
   });
 });
 
-// Botones de URL
 document.querySelectorAll('.btn-url').forEach(boton => {
   boton.addEventListener('click', () => {
     const idIframe = boton.getAttribute('data-id');
-    const iframe = document.getElementById(idIframe);
-    const newUrl = prompt("Ingresa URL:", iframe.src);
-    
-    if (newUrl && newUrl !== "about:blank") {
-      iframe.src = newUrl;
+    const newUrl = prompt("URL:", document.getElementById(idIframe).src);
+    if (newUrl) {
+      document.getElementById(idIframe).src = newUrl;
       localStorage.setItem('u' + idIframe.charAt(1) + '_ipad', newUrl);
     }
   });

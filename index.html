@@ -2,48 +2,59 @@
 <html>
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Terminal iPad - Zoom Interno</title>
+  <title>Terminal Ligera Samsung A11</title>
   <style>
-    body, html { margin: 0; padding: 0; height: 100vh; background: #000; overflow: hidden; font-family: -apple-system, sans-serif; }
+    body, html { margin: 0; padding: 0; height: 100vh; background: #000; overflow: hidden; font-family: sans-serif; }
     
     .container { 
-      display: grid; 
-      grid-template-rows: repeat(2, 1fr); 
+      display: flex; 
+      flex-direction: column; 
       height: 100vh; 
-      gap: 4px; 
       background: #2a2e39; 
     }
     
-    .panel { display: flex; flex-direction: column; background: #131722; overflow: hidden; }
+    .panel { 
+      flex: 1; 
+      display: flex; 
+      flex-direction: column; 
+      background: #131722; 
+      overflow: hidden; 
+      border-bottom: 2px solid #2a2e39;
+    }
     
     .toolbar { 
-      background: #1e222d; height: 48px; display: flex; justify-content: space-between; align-items: center;
-      border-bottom: 1px solid #2a2e39; padding: 0 15px; z-index: 10;
+      background: #1e222d; 
+      height: 45px; 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center;
+      padding: 0 10px;
+      flex-shrink: 0;
     }
 
-    /* Estilo del control de Zoom */
-    .zoom-control { display: flex; align-items: center; gap: 10px; color: #d1d4dc; font-size: 12px; }
-    input[type=range] { width: 80px; accent-color: #2962ff; }
+    .zoom-control { display: flex; align-items: center; gap: 8px; color: #d1d4dc; font-size: 11px; }
+    input[type=range] { width: 70px; }
 
-    .btn-group { display: flex; gap: 10px; }
     button { 
       background: #2a2e39; color: #d1d4dc; border: 1px solid #363a45; 
-      border-radius: 6px; font-size: 13px; font-weight: 600; padding: 6px 12px;
+      border-radius: 4px; font-size: 12px; padding: 5px 10px;
     }
 
-    /* Contenedor especial para el escalado */
+    /* El truco para la fluidez en tablets: */
     .iframe-wrapper { 
-      flex-grow: 1; 
-      overflow: auto; /* Permite scroll si el zoom es muy grande */
+      flex: 1;
+      width: 100%;
+      height: 100%;
       position: relative;
+      overflow: auto;
+      -webkit-overflow-scrolling: touch; /* Mejora el scroll en Android/iOS */
     }
 
     iframe { 
       width: 100%; 
       height: 100%; 
-      border: none; 
-      transform-origin: top left; /* El zoom nace desde la esquina */
-      transition: transform 0.2s ease;
+      border: none;
+      display: block;
     }
   </style>
 </head>
@@ -52,34 +63,25 @@
     <div class="panel">
       <div class="toolbar">
         <div class="zoom-control">
-          <span>Zoom:</span>
-          <input type="range" class="zoom-slider" data-id="v1" min="50" max="150" value="100">
+          <span>Vista:</span>
+          <input type="range" class="zoom-slider" data-id="v1" min="50" max="125" value="100">
         </div>
-        <div class="btn-group">
-          <button class="btn-url" data-id="v1">URL</button>
-        </div>
+        <button class="btn-url" data-id="v1">URL</button>
       </div>
-      <div class="iframe-wrapper">
-        <iframe id="v1"></iframe>
-      </div>
+      <div class="iframe-wrapper"><iframe id="v1"></iframe></div>
     </div>
 
     <div class="panel">
       <div class="toolbar">
         <div class="zoom-control">
-          <span>Zoom:</span>
-          <input type="range" class="zoom-slider" data-id="v2" min="50" max="150" value="100">
+          <span>Vista:</span>
+          <input type="range" class="zoom-slider" data-id="v2" min="50" max="125" value="100">
         </div>
-        <div class="btn-group">
-          <button class="btn-url" data-id="v2">URL</button>
-        </div>
+        <button class="btn-url" data-id="v2">URL</button>
       </div>
-      <div class="iframe-wrapper">
-        <iframe id="v2"></iframe>
-      </div>
+      <div class="iframe-wrapper"><iframe id="v2"></iframe></div>
     </div>
   </div>
-
   <script src="dashboard.js"></script>
 </body>
 </html>
